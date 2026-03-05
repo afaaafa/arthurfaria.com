@@ -23,6 +23,14 @@ export function Sidebar() {
   return (
     <aside className={`fixed left-0 top-0 h-screen border-white/10 flex flex-col items-center justify-center gap-4 z-40 px-4 py-4 ${hoveredSidebar ? "w-48" : "w-20"} transition-width duration-300`}       onMouseEnter={() => setHoveredSidebar(true)} 
     onMouseLeave={() => setHoveredSidebar(false)}>
+
+      <div 
+        className="absolute -left-10 top-0 h-full w-10 bg-black pointer-events-none z-0"
+        style={{
+          boxShadow: "0 0 80px 15px rgba(0, 0, 0, 0.9)",
+        }} 
+      />
+
       {navItems.map((item) => (
         <Link
           key={item.label}
