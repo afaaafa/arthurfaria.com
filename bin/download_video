@@ -1,0 +1,178 @@
+#!/usr/bin/env python3
+"""
+Download a video from URL with yt-dlp, trim between two timestamps with ffmpeg,
+and save the result to a destination directory. The original download is removed.
+
+Usage:
+  ./bin/download_video URL [OUTPUT_FILENAME] [START_TIMESTAMP] [END_TIMESTAMP] [--dest DIR]
+
+Timestamps: HH:MM:SS or MM:SS (e.g. 00:01:00, 01:30).
+If no timestamps are given, the first 30 seconds are used.
+If no destination filename is given, output.mp4 is used.
+If no destination directory is given, public/reels/brainrot is used.
+
+Examples:
+  ./bin/download_video "https://youtube.com/watch?v=xxx"
+  ./bin/download_video "https://youtube.com/watch?v=xxx" my_reel.mp4
+  ./bin/download_video "https://youtube.com/watch?v=xxx" my_reel.mp4 00:01:00 00:02:30
+  ./bin/download_video "https://youtube.com/watch?v=xxx" my_reel.mp4 00:01:00 00:02:30 --dest /public/reels
+
+Requires: yt-dlp, ffmpeg (must be on PATH).
+"""
+
+import argparse
+import glob
+import os
+import subprocess
+import sys
+import time
+
+BANNER = r"""
+  ░█████╗░███████╗
+  ██╔══██╗██╔════╝
+  ███████║█████╗
+  ██╔══██║██╔══╝
+  ██║  ██║██║
+  ╚═╝  ╚═╝╚═╝
+   download_video — video downloader & trimmer
+"""
+
+
+def print_banner():
+    print(BANNER)
+
+
+def parse_timestamp(ts: str) -> int:
+    parts = [int(p) for p in ts.strip().split(":")]
+    if len(parts) == 2:
+        return parts[0] * 60 + parts[1]
+    if len(parts) == 3:
+        return parts[0] * 3600 + parts[1] * 60 + parts[2]
+    raise ValueError(f"Invalid timestamp: {ts!r}. Use HH:MM:SS or MM:SS.")
+
+
+def seconds_to_ffmpeg(secs: int) -> str:
+    h = secs // 3600
+    m = (secs % 3600) // 60
+    s = secs % 60
+    return f"{h:02d}:{m:02d}:{s:02d}"
+
+
+def run(cmd: list[str], error_msg: str) -> None:
+    result = subprocess.run(cmd)
+    if result.returncode != 0:
+        print(f"\nError: {error_msg}", file=sys.stderr)
+        sys.exit(1)
+
+
+def main():
+    print_banner()
+
+    parser = argparse.ArgumentParser(
+        prog="download_video",
+        description="Download and trim a video using yt-dlp and ffmpeg.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  download_video "https://youtube.com/watch?v=xxx"
+  download_video "https://youtube.com/watch?v=xxx" my_reel.mp4
+  download_video "https://youtube.com/watch?v=xxx" my_reel.mp4 00:01:00 00:02:30
+  download_video "https://youtube.com/watch?v=xxx" my_reel.mp4 00:01:00 00:02:30 --dest /public/reels
+
+Timestamps accept HH:MM:SS or MM:SS format.
+Defaults: start=00:00:00, end=00:00:30, output=output.mp4, dest=public/reels/brainrot/
+        """,
+    )
+    parser.add_argument("url", help="Video URL to download")
+    parser.add_argument(
+        "filename",
+        nargs="?",
+        default="output.mp4",
+        help="Output filename (default: output.mp4)",
+    )
+    parser.add_argument(
+        "start",
+        nargs="?",
+        default="00:00:00",
+        help="Start timestamp HH:MM:SS or MM:SS (default: 00:00:00)",
+    )
+    parser.add_argument(
+        "end",
+        nargs="?",
+        default="00:00:30",
+        help="End timestamp HH:MM:SS or MM:SS (default: 00:00:30)",
+    )
+    parser.add_argument(
+        "--dest",
+        default=None,
+        help="Output directory (default: public/reels/brainrot/)",
+    )
+
+    args = parser.parse_args()
+
+    try:
+        start_sec = parse_timestamp(args.start)
+        end_sec = parse_timestamp(args.end)
+    except ValueError as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
+
+    duration_sec = end_sec - start_sec
+    if duration_sec <= 0:
+        print("Error: end timestamp must be after start timestamp.", file=sys.stderr)
+        sys.exit(1)
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(script_dir)
+    if args.dest:
+        out_dir = args.dest if os.path.isabs(args.dest) else os.path.join(project_root, args.dest)
+    else:
+        out_dir = os.path.join(project_root, "public", "reels", "brainrot")
+    os.makedirs(out_dir, exist_ok=True)
+
+    base_name = f"original_{int(time.time())}"
+    original_template = os.path.join(out_dir, f"{base_name}.%(ext)s")
+    final_path = os.path.join(out_dir, args.filename)
+
+    print(f"Downloading: {args.url}")
+    run(
+        [
+            "yt-dlp",
+            "-f", "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",
+            "--merge-output-format", "mp4",
+            "-o", original_template,
+            args.url,
+        ],
+        "Download failed. Check the URL and ensure yt-dlp is installed.",
+    )
+
+    matches = glob.glob(os.path.join(out_dir, f"{base_name}.*"))
+    if not matches or not os.path.isfile(matches[0]):
+        print("Error: Downloaded file not found.", file=sys.stderr)
+        sys.exit(1)
+    original_path = matches[0]
+
+    duration_ff = seconds_to_ffmpeg(duration_sec)
+    print(f"Trimming: -{args.start} to +{duration_ff}...")
+
+    try:
+        run(
+            [
+                "ffmpeg", "-y",
+                "-i", original_path,
+                "-ss", args.start,
+                "-t", duration_ff,
+                "-c", "copy",
+                final_path,
+            ],
+            "Trim failed. Ensure ffmpeg is installed.",
+        )
+    finally:
+        if os.path.exists(original_path):
+            os.remove(original_path)
+
+    print(f"\nDone. Output: {final_path}")
+
+
+if __name__ == "__main__":
+    main()
