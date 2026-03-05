@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Reel } from "./Reel";
+import { ReelsContext } from "./ReelsContext";
 
 export interface ReelData {
   id: string;
@@ -15,6 +16,28 @@ interface ReelsFeedProps {
 
 export function ReelsFeed({ reels }: ReelsFeedProps) {
   const reelRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+  const [activeReelId, setActiveReelId] = useState<string | null>(
+    reels[0]?.id ?? null
+  );
+
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+
+    reelRefs.current.forEach((el, id) => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setActiveReelId(id);
+          }
+        },
+        { threshold: 0.6 }
+      );
+      observer.observe(el);
+      observers.push(observer);
+    });
+
+    return () => observers.forEach((o) => o.disconnect());
+  }, [reels]);
 
   function scrollToReel(id: string) {
     const el = reelRefs.current.get(id);
@@ -34,7 +57,7 @@ export function ReelsFeed({ reels }: ReelsFeedProps) {
   }
 
   return (
-    <>
+    <ReelsContext.Provider value={{ activeReelId, scrollToReel }}>
       <div className="h-screen overflow-y-scroll snap-y snap-mandatory scrollbar-hide">
         {reels.map((reel) => (
           <Reel key={reel.id} ref={setRef(reel.id)}>
@@ -42,19 +65,6 @@ export function ReelsFeed({ reels }: ReelsFeedProps) {
           </Reel>
         ))}
       </div>
-
-      {/* <nav className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex gap-2 bg-black/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
-        {reels.map(({ id, label }) => (
-            <button
-              key={id}
-              onClick={() => scrollToReel(id)}
-              className="px-3 py-1 text-sm font-medium text-white/70 hover:text-white transition-colors rounded-full hover:bg-white/10"
-            >
-              {label}
-            </button>
-          )
-        )}
-      </nav> */}
-    </>
+    </ReelsContext.Provider>
   );
 }
