@@ -8,6 +8,13 @@ import { ReelVideo } from "@/components/ReelVideo";
 
 function randomBrainrotVideos(count: number): string[] {
   const dir = path.join(process.cwd(), "public", "reels", "brainrot");
+  
+  if (!fs.existsSync(dir)) {
+    console.warn(`Directory ${dir} does not exist. No brainrot videos will be loaded.`);
+
+    return [];
+  }
+
   const files = fs.readdirSync(dir).filter((f) => f.endsWith(".mp4"));
   const shuffled = files.sort(() => Math.random() - 0.5);
   
