@@ -12,7 +12,7 @@ const roboto = Roboto({
 
 export const metadata: Metadata = {
   title: "AF - Portfolio",
-  description: "Something in between breaking and building things",
+  description: "Something in between breaking and building things"
 };
 
 export default function RootLayout({
