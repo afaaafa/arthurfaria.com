@@ -27,11 +27,8 @@ interface ReelWelcomeProps {
   video?: React.ReactNode;
 }
 
-export function ReelWelcome({ reelId, video }: ReelWelcomeProps) {
+export function ReelWelcome({ video }: ReelWelcomeProps) {
   const reels = useReelsOptional();
-  const isActive =
-    reels == null || reelId == null ? true : reels.activeReelId === reelId;
-
   const handleJumpToReel = (targetId: string) => {
     reels?.scrollToReel(targetId);
   };
@@ -65,7 +62,7 @@ export function ReelWelcome({ reelId, video }: ReelWelcomeProps) {
         </p>
 
         <div className="flex items-center gap-5">
-          {SOCIAL_LINKS.map(({ label, icon, href, invert }) => (
+          {SOCIAL_LINKS.map(({ label, icon, href }) => (
             <a
               key={label}
               href={href}
@@ -111,6 +108,13 @@ export function ReelWelcome({ reelId, video }: ReelWelcomeProps) {
           className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-white/80 transition hover:border-white/40 hover:bg-white/10"
         >
           😎 Experience
+        </button>
+        <button
+          type="button"
+          onClick={() => handleJumpToReel("projects")}
+          className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-white/80 transition hover:border-white/40 hover:bg-white/10"
+        >
+          👍 Projects
         </button>
         <button
           type="button"
