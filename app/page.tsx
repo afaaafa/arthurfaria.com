@@ -7,6 +7,7 @@ import { ReelWelcome } from "@/components/ReelWelcome";
 import { ReelExperience } from "@/components/ReelExperience";
 import { ReelVideo } from "@/components/ReelVideo";
 import { ReelContact } from "@/components/ReelContact";
+import { ReelProjects } from "@/components/ReelProjects";
 
 function randomBrainrotVideos(count: number): string[] {
   const dir = path.join(process.cwd(), "public", "reels", "brainrot");
@@ -107,10 +108,52 @@ export default function Home() {
       id: "projects",
       label: "Projects",
       content: (
-        <div className="flex flex-col items-center mt-16 gap-4 text-center text-white">
-          <h2 className="text-3xl font-bold">Projects</h2>
-          <p className="text-white/60">Coming soon...</p>
-        </div>
+        <ReelProjects
+          projects={[
+            {
+              name: "arthurfaria.com",
+              description: "Personal portfolio built as a brainrot experience.",
+              language: "TypeScript",
+              github: "https://github.com/afaaafa/arthurfaria.com",
+            },
+            {
+              name: "linkai",
+              description: "Linktree clone built with Rails 8.",
+              language: "Ruby",
+              github: "https://github.com/afaaafa/linkai",
+            },
+            {
+              name: "smoni",
+              description: "Scope monitor for bug bounty programs. Stay aware of any updates on the scopes you hunt.",
+              language: "Python",
+              github: "https://github.com/afaaafa/smoni",
+            },
+            {
+              name: "ipfas",
+              description: "IP Finder as well as Server Names.",
+              language: "Go",
+              github: "https://github.com/afaaafa/ipfas",
+            },
+            {
+              name: "photon-energia",
+              description: "Institutional site for Photon Energia, a solar energy company.",
+              language: "TypeScript",
+              github: "https://github.com/afaaafa/photon-energia",
+            },
+            {
+              name: "ruby-oop",
+              description: "Educational material on OOP in Ruby — classes, modules, namespaces, and mixins.",
+              language: "Ruby",
+              github: "https://github.com/afaaafa/ruby-oop",
+            },
+            {
+              name: "memento-mori",
+              description: "A web experience on the philosophy of Memento Mori — remember that you will die.",
+              language: "JavaScript",
+              github: "https://github.com/afaaafa/memento-mori",
+            },
+          ]}
+        />
       ),
     },
     {
