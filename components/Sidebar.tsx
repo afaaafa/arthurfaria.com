@@ -46,7 +46,7 @@ export function Sidebar() {
   );
 
   return (
-    <aside className={`fixed left-0 top-0 h-screen border-white/10 flex flex-col items-center justify-center gap-4 z-40 px-4 py-4 ${hoveredSidebar ? "w-48" : "w-20"} transition-width duration-300`} onMouseEnter={() => setHoveredSidebar(true)}
+    <aside className={`fixed left-0 top-0 h-screen border-white/10 hidden md:flex flex-col items-center justify-center gap-4 z-40 px-4 py-4 ${hoveredSidebar ? "w-48" : "w-20"} transition-width duration-300`} onMouseEnter={() => setHoveredSidebar(true)}
     onMouseLeave={() => setHoveredSidebar(false)}>
 
       <div
