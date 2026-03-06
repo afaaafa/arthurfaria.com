@@ -24,9 +24,10 @@ const SOCIAL_LINKS = [
 
 interface ReelWelcomeProps {
   reelId?: string;
+  video?: React.ReactNode;
 }
 
-export function ReelWelcome({ reelId }: ReelWelcomeProps) {
+export function ReelWelcome({ reelId, video }: ReelWelcomeProps) {
   const reels = useReelsOptional();
   const isActive =
     reels == null || reelId == null ? true : reels.activeReelId === reelId;
@@ -36,7 +37,14 @@ export function ReelWelcome({ reelId }: ReelWelcomeProps) {
   };
 
   return (
-    <div className="flex h-full flex-col items-center justify-center gap-8 px-8 py-12 text-white">
+    <div className="relative h-full">
+      {video && (
+        <>
+          <div className="absolute inset-0">{video}</div>
+          <div className="absolute inset-0 bg-black/80" />
+        </>
+      )}
+      <div className="relative z-10 flex h-full flex-col items-center justify-center gap-8 px-8 py-12 text-white">
       <div className="flex flex-col items-center gap-4 text-center">
         <Image
           src="/Profile.jpg"
@@ -111,7 +119,7 @@ export function ReelWelcome({ reelId }: ReelWelcomeProps) {
         >
           🧠 Education
         </button>
-                <button
+        <button
           type="button"
           onClick={() => handleJumpToReel("contact")}
           className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-white/80 transition hover:border-white/40 hover:bg-white/10"
@@ -121,6 +129,7 @@ export function ReelWelcome({ reelId }: ReelWelcomeProps) {
       </div>
 
       <p className="animate-bounce text-xs text-white/40">scroll down ↓</p>
+      </div>
     </div>
   );
 }

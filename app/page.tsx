@@ -30,7 +30,7 @@ export default function Home() {
     {
       id: "welcome",
       label: "Welcome",
-      content: <ReelWelcome reelId="welcome" />,
+      content: <ReelWelcome reelId="welcome" video={<ReelVideo src="/reels/return_to_monke.mp4" />} />,
     },
     {
       id: "experience-fit",
