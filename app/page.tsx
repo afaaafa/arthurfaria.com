@@ -30,7 +30,7 @@ export default function Home() {
     {
       id: "welcome",
       label: "Welcome",
-      content: <ReelWelcome reelId="welcome" video={<ReelVideo src="/reels/return_to_monke.mp4" />} />,
+      content: <ReelWelcome reelId="welcome" video={<ReelVideo src="/reels/return-to-monke.mp4" />} />,
     },
     {
       id: "experience-fit",
@@ -116,11 +116,9 @@ export default function Home() {
     {
       id: "education",
       label: "Education",
+      description: "B.Sc. Software Engineering, The Pontifical Catholic University of Minas Gerais",
       content: (
-        <div className="flex flex-col items-center mt-16 gap-4 text-center text-white">
-          <h2 className="text-3xl font-bold">Education</h2>
-          <p className="text-white/60">Coming soon...</p>
-        </div>
+        <ReelVideo src="/reels/PUC-Minas.mp4" />
       ),
     },
     {

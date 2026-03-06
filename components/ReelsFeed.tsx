@@ -8,6 +8,7 @@ export interface ReelData {
   id: string;
   label: string;
   content: React.ReactNode;
+  description?: string;
 }
 
 interface ReelsFeedProps {
@@ -62,7 +63,7 @@ export function ReelsFeed({ reels, sidebar }: ReelsFeedProps) {
       {sidebar}
       <div className="h-screen overflow-y-scroll snap-y snap-mandatory scrollbar-hide">
         {reels.map((reel) => (
-          <Reel key={reel.id} ref={setRef(reel.id)}>
+          <Reel key={reel.id} ref={setRef(reel.id)} description={reel.description}>
             {reel.content}
           </Reel>
         ))}

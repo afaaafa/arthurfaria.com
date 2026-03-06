@@ -54,7 +54,7 @@ export function ReelContact({ reelId }: ReelContactProps) {
         </p>
         <h2 className="text-3xl font-black tracking-tight">Send me a Reels</h2>
         <p className="text-sm text-white/50">
-          Or maybe just say hi? Fill the form below or reach me.
+          Or maybe just say hi?
         </p>
       </div>
 
