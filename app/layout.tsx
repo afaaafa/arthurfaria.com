@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Sidebar } from "@/components/Sidebar";
-
 import { Roboto } from "next/font/google";
 import "./globals.css";
 
@@ -23,8 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${roboto.variable} antialiased`}>
-        <Sidebar />
-        <main>{children}</main>
+        {children}
       </body>
     </html>
   );

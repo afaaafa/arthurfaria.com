@@ -48,7 +48,7 @@ export function ReelWelcome({ reelId }: ReelWelcomeProps) {
 
         <div>
           <h1 className="text-3xl font-black tracking-tight">Arthur Faria</h1>
-          <p className="mt-1 text-xs font-medium text-white/50">Belo Horizonte, Brazil</p>
+          <p className="mt-1 text-xs font-medium text-white/70">🇧🇷 Belo Horizonte, Brazil 🇧🇷</p>
         </div>
 
         <p className="max-w-sm text-sm leading-relaxed text-white/70">
@@ -102,14 +102,21 @@ export function ReelWelcome({ reelId }: ReelWelcomeProps) {
           onClick={() => handleJumpToReel("experience-fit")}
           className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-white/80 transition hover:border-white/40 hover:bg-white/10"
         >
-          Experience
+          😎 Experience
         </button>
         <button
           type="button"
           onClick={() => handleJumpToReel("education")}
           className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-white/80 transition hover:border-white/40 hover:bg-white/10"
         >
-          Education
+          🧠 Education
+        </button>
+                <button
+          type="button"
+          onClick={() => handleJumpToReel("contact")}
+          className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-white/80 transition hover:border-white/40 hover:bg-white/10"
+        >
+          📱 Send me a Reels
         </button>
       </div>
 

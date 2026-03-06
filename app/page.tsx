@@ -1,10 +1,12 @@
 import fs from "fs";
 import path from "path";
 
+import { Sidebar } from "@/components/Sidebar";
 import { ReelsFeed, ReelData } from "@/components/ReelsFeed";
 import { ReelWelcome } from "@/components/ReelWelcome";
 import { ReelExperience } from "@/components/ReelExperience";
 import { ReelVideo } from "@/components/ReelVideo";
+import { ReelContact } from "@/components/ReelContact";
 
 function randomBrainrotVideos(count: number): string[] {
   const dir = path.join(process.cwd(), "public", "reels", "brainrot");
@@ -105,7 +107,7 @@ export default function Home() {
       id: "projects",
       label: "Projects",
       content: (
-        <div className="flex flex-col items-center gap-4 text-center text-white">
+        <div className="flex flex-col items-center mt-16 gap-4 text-center text-white">
           <h2 className="text-3xl font-bold">Projects</h2>
           <p className="text-white/60">Coming soon...</p>
         </div>
@@ -115,7 +117,7 @@ export default function Home() {
       id: "education",
       label: "Education",
       content: (
-        <div className="flex flex-col items-center gap-4 text-center text-white">
+        <div className="flex flex-col items-center mt-16 gap-4 text-center text-white">
           <h2 className="text-3xl font-bold">Education</h2>
           <p className="text-white/60">Coming soon...</p>
         </div>
@@ -124,18 +126,11 @@ export default function Home() {
     {
       id: "contact",
       label: "Contact",
-      content: (
-        <div className="flex flex-col items-center gap-4 text-center text-white">
-          <h2 className="text-3xl font-bold">Contact</h2>
-          <p className="text-white/60">Coming soon...</p>
-        </div>
-      ),
+      content: <ReelContact reelId="contact" />,
     },
   ];
 
   return (
-    <main>
-      <ReelsFeed reels={reels} />
-    </main>
+    <ReelsFeed reels={reels} sidebar={<Sidebar />} />
   );
 }

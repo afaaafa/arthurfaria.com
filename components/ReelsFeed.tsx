@@ -12,9 +12,10 @@ export interface ReelData {
 
 interface ReelsFeedProps {
   reels: ReelData[];
+  sidebar?: React.ReactNode;
 }
 
-export function ReelsFeed({ reels }: ReelsFeedProps) {
+export function ReelsFeed({ reels, sidebar }: ReelsFeedProps) {
   const reelRefs = useRef<Map<string, HTMLDivElement>>(new Map());
   const [activeReelId, setActiveReelId] = useState<string | null>(
     reels[0]?.id ?? null
@@ -58,6 +59,7 @@ export function ReelsFeed({ reels }: ReelsFeedProps) {
 
   return (
     <ReelsContext.Provider value={{ activeReelId, scrollToReel }}>
+      {sidebar}
       <div className="h-screen overflow-y-scroll snap-y snap-mandatory scrollbar-hide">
         {reels.map((reel) => (
           <Reel key={reel.id} ref={setRef(reel.id)}>
