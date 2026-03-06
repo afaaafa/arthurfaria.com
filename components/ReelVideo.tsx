@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import { useReelActive } from "./ReelActiveContext";
+import { useReels } from "./ReelsContext";
 
 interface ReelVideoProps {
   src: string;
@@ -9,13 +11,20 @@ interface ReelVideoProps {
 
 export function ReelVideo({ src, className = "" }: ReelVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [muted, setMuted] = useState(true);
+  const isActive = useReelActive();
+  const { muted, setMuted } = useReels();
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    video.play().catch(() => {});
-  }, []);
+    if (isActive) {
+      video.muted = muted;
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+      video.muted = true;
+    }
+  }, [isActive]);
 
   function toggleMute() {
     const video = videoRef.current;

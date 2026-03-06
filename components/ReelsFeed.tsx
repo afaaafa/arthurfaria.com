@@ -21,6 +21,7 @@ export function ReelsFeed({ reels, sidebar }: ReelsFeedProps) {
   const [activeReelId, setActiveReelId] = useState<string | null>(
     reels[0]?.id ?? null
   );
+  const [muted, setMuted] = useState(true);
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -59,11 +60,11 @@ export function ReelsFeed({ reels, sidebar }: ReelsFeedProps) {
   }
 
   return (
-    <ReelsContext.Provider value={{ activeReelId, scrollToReel }}>
+    <ReelsContext.Provider value={{ activeReelId, scrollToReel, muted, setMuted }}>
       {sidebar}
       <div className="h-screen overflow-y-scroll snap-y snap-mandatory scrollbar-hide">
         {reels.map((reel) => (
-          <Reel key={reel.id} ref={setRef(reel.id)} description={reel.description}>
+          <Reel key={reel.id} ref={setRef(reel.id)} description={reel.description} isActive={reel.id === activeReelId}>
             {reel.content}
           </Reel>
         ))}

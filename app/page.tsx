@@ -172,6 +172,6 @@ export default function Home() {
   ];
 
   return (
-    <ReelsFeed reels={reels} sidebar={<Sidebar />} />
+    <ReelsFeed reels={reels} sidebar={<Sidebar key="sidebar" />} />
   );
 }
