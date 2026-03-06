@@ -1,6 +1,3 @@
-import fs from "fs";
-import path from "path";
-
 import { Sidebar } from "@/components/Sidebar";
 import { ReelsFeed, ReelData } from "@/components/ReelsFeed";
 import { ReelWelcome } from "@/components/ReelWelcome";
@@ -9,19 +6,21 @@ import { ReelVideo } from "@/components/ReelVideo";
 import { ReelContact } from "@/components/ReelContact";
 import { ReelProjects } from "@/components/ReelProjects";
 
+const BRAINROT_VIDEOS = [
+  "https://res.cloudinary.com/dad5eakr9/video/upload/v1772802432/gta-01_gikuw8.mp4",
+  "https://res.cloudinary.com/dad5eakr9/video/upload/v1772802423/satisfying-02_iepfgq.mp4",
+  "https://res.cloudinary.com/dad5eakr9/video/upload/v1772802422/subway-surfers-01_iwqdy8.mp4",
+  "https://res.cloudinary.com/dad5eakr9/video/upload/v1772802420/roblox-01_rodzx1.mp4",
+  "https://res.cloudinary.com/dad5eakr9/video/upload/v1772802419/roblox-02_jggx2p.mp4",
+  "https://res.cloudinary.com/dad5eakr9/video/upload/v1772802419/gta-02_plo45n.mp4",
+  "https://res.cloudinary.com/dad5eakr9/video/upload/v1772802420/satisfying-03_vbyxhz.mp4",
+  "https://res.cloudinary.com/dad5eakr9/video/upload/v1772802418/satisfying-01_xef1lp.mp4",
+  "https://res.cloudinary.com/dad5eakr9/video/upload/v1772802417/cat_mzsna5.mp4",
+];
+
 function randomBrainrotVideos(count: number): string[] {
-  const dir = path.join(process.cwd(), "public", "reels", "brainrot");
-  
-  if (!fs.existsSync(dir)) {
-    console.warn(`Directory ${dir} does not exist. No brainrot videos will be loaded.`);
-
-    return [];
-  }
-
-  const files = fs.readdirSync(dir).filter((f) => f.endsWith(".mp4"));
-  const shuffled = files.sort(() => Math.random() - 0.5);
-  
-  return shuffled.slice(0, count).map((f) => `/reels/brainrot/${f}`);
+  const shuffled = [...BRAINROT_VIDEOS].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
 }
 
 export default function Home() {
@@ -31,7 +30,7 @@ export default function Home() {
     {
       id: "welcome",
       label: "Welcome",
-      content: <ReelWelcome reelId="welcome" video={<ReelVideo src="/reels/return-to-monke.mp4" />} />,
+      content: <ReelWelcome reelId="welcome" video={<ReelVideo src="https://res.cloudinary.com/dad5eakr9/video/upload/v1772802451/return-to-monke_qzaefc.mp4" />} />,
     },
     {
       id: "experience-fit",
@@ -161,7 +160,7 @@ export default function Home() {
       label: "Education",
       description: "B.Sc. Software Engineering, The Pontifical Catholic University of Minas Gerais",
       content: (
-        <ReelVideo src="/reels/PUC-Minas.mp4" />
+        <ReelVideo src="https://res.cloudinary.com/dad5eakr9/video/upload/v1772802436/PUC-Minas_gp9brr.mp4" />
       ),
     },
     {
