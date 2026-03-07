@@ -14,7 +14,6 @@ const BRAINROT_VIDEOS = [
   "https://res.cloudinary.com/dad5eakr9/video/upload/v1772802422/subway-surfers-01_iwqdy8.mp4",
   "https://res.cloudinary.com/dad5eakr9/video/upload/v1772802420/roblox-01_rodzx1.mp4",
   "https://res.cloudinary.com/dad5eakr9/video/upload/v1772802419/roblox-02_jggx2p.mp4",
-  "https://res.cloudinary.com/dad5eakr9/video/upload/v1772802419/gta-02_plo45n.mp4",
   "https://res.cloudinary.com/dad5eakr9/video/upload/v1772802420/satisfying-03_vbyxhz.mp4",
   "https://res.cloudinary.com/dad5eakr9/video/upload/v1772802418/satisfying-01_xef1lp.mp4",
   "https://res.cloudinary.com/dad5eakr9/video/upload/v1772802417/cat_mzsna5.mp4",
