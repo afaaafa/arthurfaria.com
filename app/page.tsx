@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { Sidebar } from "@/components/Sidebar";
 import { ReelsFeed, ReelData } from "@/components/ReelsFeed";
 import { ReelWelcome } from "@/components/ReelWelcome";
