@@ -8,7 +8,7 @@ import { ReelVideo } from "@/components/ReelVideo";
 import { ReelContact } from "@/components/ReelContact";
 import { ReelProjects } from "@/components/ReelProjects";
 
-const BRAINROT_VIDEOS = [
+const BRAINROT_VIDEOS_ORIGINAL = [
   "https://res.cloudinary.com/dad5eakr9/video/upload/v1772802432/gta-01_gikuw8.mp4",
   "https://res.cloudinary.com/dad5eakr9/video/upload/v1772802423/satisfying-02_iepfgq.mp4",
   "https://res.cloudinary.com/dad5eakr9/video/upload/v1772802422/subway-surfers-01_iwqdy8.mp4",
@@ -18,6 +18,8 @@ const BRAINROT_VIDEOS = [
   "https://res.cloudinary.com/dad5eakr9/video/upload/v1772802418/satisfying-01_xef1lp.mp4",
   "https://res.cloudinary.com/dad5eakr9/video/upload/v1772802417/cat_mzsna5.mp4",
 ];
+
+const BRAINROT_VIDEOS = BRAINROT_VIDEOS_ORIGINAL.map(url => `${url}?t=${Date.now()}`);
 
 function randomBrainrotVideos(count: number): string[] {
   const shuffled = [...BRAINROT_VIDEOS].sort(() => Math.random() - 0.5);
