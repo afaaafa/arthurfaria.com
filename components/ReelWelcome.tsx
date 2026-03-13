@@ -3,24 +3,26 @@
 import Image from "next/image";
 import { useReelsOptional } from "./ReelsContext";
 
-const LANGUAGES = [
-  { label: "Ruby", className: "border-red-500/60 text-red-400" },
-  { label: "JavaScript", className: "border-yellow-400/60 text-yellow-300" },
-  { label: "TypeScript", className: "border-blue-400/60 text-blue-300" },
-];
-
-const FRAMEWORKS = [
-  { label: "Rails", className: "border-white/20 text-white/70" },
-  { label: "Node.js", className: "border-white/20 text-white/70" },
-  { label: "Next.js", className: "border-white/20 text-white/70" },
-  { label: "React", className: "border-white/20 text-white/70" },
+const STATS = [
+  { value: "3+", label: "yrs exp" },
+  { value: "7", label: "projects" },
+  { value: "B.Sc.", label: "degree" },
 ];
 
 const SOCIAL_LINKS = [
   { label: "LinkedIn", icon: "/Linkedin.svg", href: "https://linkedin.com/in/arfaria" },
-  { label: "GitHub", icon: "/Github.svg", href: "https://github.com/afaaafa", invert: true },
+  { label: "GitHub", icon: "/Github.svg", href: "https://github.com/afaaafa" },
   { label: "Substack", icon: "/Substack.svg", href: "https://afaaafa.substack.com/" },
 ];
+
+const NAV_HIGHLIGHTS = [
+  { id: "experience-fit", emoji: "😎", label: "Experience" },
+  { id: "projects", emoji: "👍", label: "Projects" },
+  { id: "education", emoji: "🧠", label: "Education" },
+  { id: "contact", emoji: "📱", label: "Contact" },
+];
+
+const IG_GRADIENT = "linear-gradient(45deg, #f9ce34, #ee2a7b, #6228d7)";
 
 interface ReelWelcomeProps {
   reelId?: string;
@@ -29,9 +31,6 @@ interface ReelWelcomeProps {
 
 export function ReelWelcome({ video }: ReelWelcomeProps) {
   const reels = useReelsOptional();
-  const handleJumpToReel = (targetId: string) => {
-    reels?.scrollToReel(targetId);
-  };
 
   return (
     <div className="relative h-full">
@@ -41,26 +40,42 @@ export function ReelWelcome({ video }: ReelWelcomeProps) {
           <div className="absolute inset-0 bg-black/80" />
         </>
       )}
-      <div className="relative z-10 flex h-full flex-col items-center justify-center gap-8 px-8 py-12 text-white">
-      <div className="flex flex-col items-center gap-4 text-center">
-        <Image
-          src="/Profile.jpg"
-          alt="Arthur Faria"
-          width={72}
-          height={72}
-          className="rounded-full border border-white/20 object-cover"
-        />
 
-        <div>
-          <h1 className="text-3xl font-black tracking-tight">Arthur Faria</h1>
-          <p className="mt-1 text-xs font-medium text-white/70">🇧🇷 Belo Horizonte, Brazil 🇧🇷</p>
+      <div className="relative z-10 flex h-full flex-col items-center justify-center gap-7 px-6 py-12 text-white">
+
+        <div className="rounded-full p-0.75" style={{ background: IG_GRADIENT }}>
+          <div className="rounded-full bg-black p-[3px]">
+            <Image
+              src="/Profile.jpg"
+              alt="Arthur Faria"
+              width={86}
+              height={86}
+              className="rounded-full object-cover"
+            />
+          </div>
         </div>
 
-        <p className="max-w-sm text-sm leading-relaxed text-white/70">
-          Software Engineer with 3+ years of experience building products.
-          I bridge the gap between technical excellence and business growth.
+        <div className="text-center">
+          <h1 className="text-2xl font-black tracking-tight">Arthur Faria</h1>
+          <p className="mt-1 text-sm text-white/60">Software Engineer · 🇧🇷</p>
+        </div>
+
+        {/* Stats */}
+        <div className="flex w-full max-w-65 divide-x divide-white/15">
+          {STATS.map(({ value, label }) => (
+            <div key={label} className="flex flex-1 flex-col items-center gap-0.5">
+              <span className="text-lg font-black">{value}</span>
+              <span className="text-[11px] text-white/50">{label}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Bio */}
+        <p className="max-w-60 text-center text-sm leading-relaxed text-white/70">
+          Building products that bridge technical excellence and business growth.
         </p>
 
+        {/* Social links */}
         <div className="flex items-center gap-5">
           {SOCIAL_LINKS.map(({ label, icon, href }) => (
             <a
@@ -69,70 +84,31 @@ export function ReelWelcome({ video }: ReelWelcomeProps) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={label}
-              className="opacity-70 transition-opacity hover:opacity-100"
+              className="opacity-60 transition hover:opacity-100"
             >
-              <Image src={icon} alt={label} width={24} height={24} />
+              <Image src={icon} alt={label} width={22} height={22} />
             </a>
           ))}
         </div>
-      </div>
 
-      <div className="flex flex-col items-center gap-3">
-        <div className="flex flex-wrap justify-center gap-2">
-          {LANGUAGES.map((badge) => (
-            <span
-              key={badge.label}
-              className={`border-2 px-3 py-1 text-xs font-bold uppercase tracking-wider shadow-[0_0_15px_rgba(0,0,0,0.6)] ${badge.className}`}
+        <div className="flex gap-5">
+          {NAV_HIGHLIGHTS.map(({ id, emoji, label }) => (
+            <button
+              key={id}
+              type="button"
+              onClick={() => reels?.scrollToReel(id)}
+              className="flex cursor-pointer flex-col items-center gap-1.5 transition-transform active:scale-90"
             >
-              {badge.label}
-            </span>
+              <div className="rounded-full p-[2.5px]" style={{ background: IG_GRADIENT }}>
+                <div className="flex h-13.5 w-13.5 items-center justify-center rounded-full bg-black text-2xl transition hover:bg-neutral-900">
+                  {emoji}
+                </div>
+              </div>
+              <span className="text-[11px] font-medium text-white/70">{label}</span>
+            </button>
           ))}
         </div>
 
-        <div className="flex flex-wrap justify-center gap-2">
-          {FRAMEWORKS.map((badge) => (
-            <span
-              key={badge.label}
-              className={`border bg-white/5 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider backdrop-blur-sm ${badge.className}`}
-            >
-              {badge.label}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      <div className="flex flex-wrap items-center justify-center gap-2">
-        <button
-          type="button"
-          onClick={() => handleJumpToReel("experience-fit")}
-          className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-white/80 transition hover:border-white/40 hover:bg-white/10"
-        >
-          😎 Experience
-        </button>
-        <button
-          type="button"
-          onClick={() => handleJumpToReel("projects")}
-          className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-white/80 transition hover:border-white/40 hover:bg-white/10"
-        >
-          👍 Projects
-        </button>
-        <button
-          type="button"
-          onClick={() => handleJumpToReel("education")}
-          className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-white/80 transition hover:border-white/40 hover:bg-white/10"
-        >
-          🧠 Education
-        </button>
-        <button
-          type="button"
-          onClick={() => handleJumpToReel("contact")}
-          className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-white/80 transition hover:border-white/40 hover:bg-white/10"
-        >
-          📱 Send me a Reels
-        </button>
-      </div>
-
-      <p className="animate-bounce text-xs text-white/40">scroll down ↓</p>
       </div>
     </div>
   );
