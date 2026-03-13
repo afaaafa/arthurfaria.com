@@ -26,7 +26,7 @@ export function ReelProjects({ projects }: ReelProjectsProps) {
         <p className="text-xs font-bold uppercase tracking-widest text-white/30">Projects</p>
       </div>
 
-      <div className="mt-12 flex flex-col gap-3 overflow-y-auto px-8 pb-8">
+      <div className="mt-12 flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-8 pb-8">
         {projects.map((project) => {
           const lang = LANGUAGE_STYLES[project.language] ?? {
             dot: "bg-white/40",

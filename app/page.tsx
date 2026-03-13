@@ -148,12 +148,6 @@ export default function Home() {
               language: "Ruby",
               github: "https://github.com/afaaafa/ruby-oop",
             },
-            {
-              name: "memento-mori",
-              description: "A web experience on the philosophy of Memento Mori — remember that you will die.",
-              language: "JavaScript",
-              github: "https://github.com/afaaafa/memento-mori",
-            },
           ]}
         />
       ),
