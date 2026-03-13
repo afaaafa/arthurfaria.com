@@ -33,7 +33,7 @@ export default function Home() {
     {
       id: "welcome",
       label: "Welcome",
-      content: <ReelWelcome reelId="welcome" video={<ReelVideo src="https://res.cloudinary.com/dad5eakr9/video/upload/v1772802451/return-to-monke_qzaefc.mp4" />} />,
+      content: <ReelWelcome reelId="welcome" video={<ReelVideo src="https://res.cloudinary.com/dad5eakr9/video/upload/v1773440895/life_could_be_a_dream_nliziq.mp4" />} />,
     },
     {
       id: "experience-fit",
