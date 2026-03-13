@@ -28,7 +28,7 @@ export const Reel = forwardRef<HTMLDivElement, ReelProps>(function Reel(
 
   return (
     <ReelActiveContext.Provider value={{ isActive, shouldPreload }}>
-      <div ref={ref} className="h-screen flex justify-center snap-start">
+      <div ref={ref} className="h-dvh flex justify-center snap-start">
         <div className="relative w-full md:w-150 md:my-4 h-full md:h-[calc(100%-2rem)] overflow-hidden md:border border-[#222427] md:rounded-2xl bg-black shadow-[0_4px_50px_20px_rgba(0,0,80,0.1)]">
           <div className="h-full w-full">{children}</div>
           {description && (
@@ -36,6 +36,13 @@ export const Reel = forwardRef<HTMLDivElement, ReelProps>(function Reel(
               <p className="text-white text-sm leading-snug">{description}</p>
             </div>
           )}
+          <div className="md:hidden absolute right-3 bottom-[15%] flex flex-col items-center gap-4 z-20">
+            <LikeButton reelId={reelId} />
+            <CommentButton
+              count={commentCount}
+              onClick={() => setCommentOpen((o) => !o)}
+            />
+          </div>
           <CommentSection
             reelId={reelId}
             open={commentOpen}

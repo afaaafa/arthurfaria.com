@@ -67,7 +67,7 @@ export function ReelsFeed({ reels, sidebar }: ReelsFeedProps) {
   return (
     <ReelsContext.Provider value={{ activeReelId, scrollToReel, muted, setMuted }}>
       {sidebar}
-      <div className="h-screen overflow-y-scroll snap-y snap-mandatory scrollbar-hide">
+      <div className="h-dvh overflow-y-scroll snap-y snap-mandatory scrollbar-hide">
         {reels.map((reel) => (
           <Reel key={reel.id} ref={setRef(reel.id)} reelId={reel.id} description={reel.description} isActive={reel.id === activeReelId} shouldPreload={preloadReelIds.has(reel.id)}>
             {reel.content}
