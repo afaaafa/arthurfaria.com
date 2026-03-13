@@ -59,12 +59,17 @@ export function ReelsFeed({ reels, sidebar }: ReelsFeedProps) {
     };
   }
 
+  const activeIndex = reels.findIndex((r) => r.id === activeReelId);
+  const preloadReelIds = new Set(
+    [reels[activeIndex]?.id, reels[activeIndex + 1]?.id].filter(Boolean)
+  );
+
   return (
     <ReelsContext.Provider value={{ activeReelId, scrollToReel, muted, setMuted }}>
       {sidebar}
       <div className="h-screen overflow-y-scroll snap-y snap-mandatory scrollbar-hide">
         {reels.map((reel) => (
-          <Reel key={reel.id} ref={setRef(reel.id)} description={reel.description} isActive={reel.id === activeReelId}>
+          <Reel key={reel.id} ref={setRef(reel.id)} description={reel.description} isActive={reel.id === activeReelId} shouldPreload={preloadReelIds.has(reel.id)}>
             {reel.content}
           </Reel>
         ))}

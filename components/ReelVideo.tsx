@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useReelActive } from "./ReelActiveContext";
+import { useReelActive, useReelShouldPreload } from "./ReelActiveContext";
 import { useReels } from "./ReelsContext";
 
 interface ReelVideoProps {
@@ -12,6 +12,7 @@ interface ReelVideoProps {
 export function ReelVideo({ src, className = "" }: ReelVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const isActive = useReelActive();
+  const shouldPreload = useReelShouldPreload();
   const { muted, setMuted } = useReels();
 
   useEffect(() => {
@@ -43,6 +44,7 @@ export function ReelVideo({ src, className = "" }: ReelVideoProps) {
         loop
         muted
         playsInline
+        preload={shouldPreload ? "auto" : "none"}
       />
       <button
         onClick={toggleMute}

@@ -6,14 +6,15 @@ interface ReelProps {
   children: React.ReactNode;
   description?: string;
   isActive?: boolean;
+  shouldPreload?: boolean;
 }
 
 export const Reel = forwardRef<HTMLDivElement, ReelProps>(function Reel(
-  { children, description, isActive = false },
+  { children, description, isActive = false, shouldPreload = false },
   ref
 ) {
   return (
-    <ReelActiveContext.Provider value={isActive}>
+    <ReelActiveContext.Provider value={{ isActive, shouldPreload }}>
     <div
       ref={ref}
       className="h-screen flex justify-center snap-start"
