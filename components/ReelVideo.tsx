@@ -48,7 +48,7 @@ export function ReelVideo({ src, className = "" }: ReelVideoProps) {
       />
       <button
         onClick={toggleMute}
-        className="absolute bottom-4 right-4 flex items-center justify-center rounded-full bg-black/50 p-2 text-white z-999"
+        className="absolute bottom-4 right-4 flex items-center justify-center rounded-full bg-black/50 p-2 text-white z-10"
         aria-label={muted ? "Unmute" : "Mute"}
       >
         <img
