@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useReelsOptional } from "./ReelsContext";
+import Link from "next/link";
 
 const STATS = [
   { value: "3+", label: "yrs exp" },
@@ -44,14 +45,16 @@ export function ReelWelcome({ video }: ReelWelcomeProps) {
       <div className="relative z-10 flex h-full flex-col items-center justify-center gap-7 px-6 py-12 text-white">
 
         <div className="rounded-full p-0.75" style={{ background: IG_GRADIENT }}>
-          <div className="rounded-full bg-black p-[3px]">
-            <Image
-              src="/Profile.jpg"
-              alt="Arthur Faria"
-              width={86}
-              height={86}
-              className="rounded-full object-cover"
-            />
+          <div className="rounded-full bg-black p-0.75">
+            <Link href={"https://www.youtube.com/watch?v=dQw4w9WgXcQ"} target="_blank" rel="noopener noreferrer">
+              <Image
+                src="/Profile.jpg"
+                alt="Arthur Faria"
+                  width={86}
+                  height={86}
+                className="rounded-full object-cover"
+              />
+            </Link>
           </div>
         </div>
 
