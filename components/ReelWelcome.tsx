@@ -38,13 +38,13 @@ export function ReelWelcome({ video }: ReelWelcomeProps) {
       {video && (
         <>
           <div className="absolute inset-0">{video}</div>
-          <div className="absolute inset-0 bg-black/80" />
+          <div className="absolute inset-0 bg-black/80 pointer-events-none" />
         </>
       )}
 
-      <div className="relative z-10 flex h-full flex-col items-center justify-center gap-7 px-6 py-12 text-white">
+      <div className="relative z-10 flex h-full flex-col items-center justify-center gap-7 px-6 py-12 text-white pointer-events-none">
 
-        <div className="rounded-full p-0.75" style={{ background: IG_GRADIENT }}>
+        <div className="rounded-full p-0.75 pointer-events-auto" style={{ background: IG_GRADIENT }}>
           <div className="rounded-full bg-black p-0.75">
             <Link href={"https://www.youtube.com/watch?v=dQw4w9WgXcQ"} target="_blank" rel="noopener noreferrer">
               <Image
@@ -79,7 +79,7 @@ export function ReelWelcome({ video }: ReelWelcomeProps) {
         </p>
 
         {/* Social links */}
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-5 pointer-events-auto">
           {SOCIAL_LINKS.map(({ label, icon, href }) => (
             <a
               key={label}
@@ -94,7 +94,7 @@ export function ReelWelcome({ video }: ReelWelcomeProps) {
           ))}
         </div>
 
-        <div className="flex gap-5">
+        <div className="flex gap-5 pointer-events-auto">
           {NAV_HIGHLIGHTS.map(({ id, emoji, label }) => (
             <button
               key={id}
