@@ -75,7 +75,7 @@ export function ReelWelcome({ video }: ReelWelcomeProps) {
 
         {/* Bio */}
         <p className="max-w-60 text-center text-sm leading-relaxed text-white/70">
-          Building products that bridge technical excellence and business growth.
+          I'm a Product Engineer (or at least this what I say to my mom and co-workers).
         </p>
 
         {/* Social links */}
